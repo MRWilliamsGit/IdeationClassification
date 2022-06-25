@@ -3,7 +3,6 @@
 #predict file supplied by Google
 
 import sys
-
 from google.api_core.client_options import ClientOptions
 from google.cloud import automl_v1
 

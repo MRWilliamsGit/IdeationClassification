@@ -1,4 +1,11 @@
 black
+gcloud
+google-api-core
+google-api-python-client
+google-cloud
+google-cloud-automl
 pytest
 pytest-cov
 pylint
+requests
+streamlit

@@ -1,23 +1,18 @@
 #Maria Williams
 #6/24/22
 #call API
-#some code from https://betterprogramming.pub/how-to-make-http-requests-in-streamlit-app-f22a77fd1ed7
 
-import streamlit
-import requests
+from googleapiclient import discovery
+from googleapiclient import errors
+import streamlit as st
+import requests as r
 from google.cloud import automl
-
-def fetch(session, url):
-    try:
-        result = session.get(url)
-        return result.json()
-    except Exception:
-        return {}
+import os
 
 def main():
-    st.title("Ideation Classification")
+    #st.title("Ideation Classification")
 
-    project_id = "IdeationClassification"
+    project_id = "ideationclassification"
     model_id = "TCN88982376524283904"
     content = "Hello"
 
@@ -25,6 +20,7 @@ def main():
 
     # Get the full path of the model.
     model_full_id = automl.AutoMlClient.model_path(project_id, "us-central1", model_id)
+    print(model_full_id)
 
     # Supported mime_types: 'text/plain', 'text/html'
     # https://cloud.google.com/automl/docs/reference/rpc/google.cloud.automl.v1#textsnippet
@@ -40,4 +36,5 @@ def main():
         )
 
 if __name__ == '__main__':
+    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] =r"C:\Users\maria\OneDrive\Documents\School Summer 2022\IdeationClassification\ideationclassification-d09633ba31d7.json"
     main()
