@@ -34,3 +34,6 @@ def main():
 
     st.success("This text does not pertain to suicide.")
     st.error("This text discusses suicide or displays possible suicidal ideation.")
+
+if __name__ == "__main__":
+       main() 
