@@ -1,40 +1,36 @@
 #Maria Williams
-#6/24/22
-#call API
+#6/27/22
 
-from googleapiclient import discovery
-from googleapiclient import errors
 import streamlit as st
-import requests as r
-from google.cloud import automl
-import os
+from google.cloud import aiplatform
+from predict import class_this
+
+def getpredict():
+    
+    #API call
+    predictions = class_this(
+        project="428284761450",
+        endpoint_id="7889277404269510656",
+        location="us-central1",
+        content="It is a nice day"
+    )
+
+    for prediction in predictions:
+        print(" prediction:", dict(prediction))
 
 def main():
-    #st.title("Ideation Classification")
+    st.title("Classifying Reddit Posts")
+    text = st.text_area('Enter Text:')
+    st.button("Classify")
 
-    project_id = "ideationclassification"
-    model_id = "TCN88982376524283904"
-    content = "Hello"
-
-    prediction_client = automl.PredictionServiceClient()
-
-    # Get the full path of the model.
-    model_full_id = automl.AutoMlClient.model_path(project_id, "us-central1", model_id)
-    print(model_full_id)
-
-    # Supported mime_types: 'text/plain', 'text/html'
-    # https://cloud.google.com/automl/docs/reference/rpc/google.cloud.automl.v1#textsnippet
-    text_snippet = automl.TextSnippet(content=content, mime_type="text/plain")
-    payload = automl.ExamplePayload(text_snippet=text_snippet)
-
-    response = prediction_client.predict(name=model_full_id, payload=payload)
-
-    for annotation_payload in response.payload:
-        print(u"Predicted class name: {}".format(annotation_payload.display_name))
-        print(
-            u"Predicted class score: {}".format(annotation_payload.classification.score)
+    if st.button("Classify"):
+        #get prediction
+        predictions = class_this(
+            project="428284761450",
+            endpoint_id="7889277404269510656",
+            location="us-central1",
+            content=text
         )
 
-if __name__ == '__main__':
-    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] =r"C:\Users\maria\OneDrive\Documents\School Summer 2022\IdeationClassification\ideationclassification-d09633ba31d7.json"
-    main()
+    st.success("This text does not pertain to suicide.")
+    st.error("This text discusses suicide or displays possible suicidal ideation.")

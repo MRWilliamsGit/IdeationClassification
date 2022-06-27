@@ -1,35 +1,44 @@
-#Maria Williams
-#6/24/22
-#predict file supplied by Google
+# Original files copied from google
+# Function altered to have shorter name and return response instead of print
 
-import sys
-from google.api_core.client_options import ClientOptions
-from google.cloud import automl_v1
+from google.cloud import aiplatform
+from google.cloud.aiplatform.gapic.schema import predict
+from google.protobuf import json_format
+from google.protobuf.struct_pb2 import Value
 
-def inline_text_payload(file_path):
-    with open(file_path, 'rb') as ff:
-        content = ff.read()
-    return {'text_snippet': {'content': content, 'mime_type': 'text/plain'} }
 
-def pdf_payload(file_path):
-    return {'document': {'input_config': {'gcs_source': {'input_uris': [file_path] } } } }
+def class_this(
+    project: str,
+    endpoint_id: str,
+    content: str,
+    location: str = "us-central1",
+    api_endpoint: str = "us-central1-aiplatform.googleapis.com",
+):
+    # The AI Platform services require regional API endpoints.
+    client_options = {"api_endpoint": api_endpoint}
+    # Initialize client that will be used to create and send requests.
+    # This client only needs to be created once, and can be reused for multiple requests.
+    client = aiplatform.gapic.PredictionServiceClient(client_options=client_options)
+    instance = predict.instance.TextClassificationPredictionInstance(
+        content=content,
+    ).to_value()
+    instances = [instance]
+    parameters_dict = {}
+    parameters = json_format.ParseDict(parameters_dict, Value())
+    endpoint = client.endpoint_path(
+        project=project, location=location, endpoint=endpoint_id
+    )
+    response = client.predict(
+        endpoint=endpoint, instances=instances, parameters=parameters
+    )
+    #print("response")
+    #print(" deployed_model_id:", response.deployed_model_id)
 
-def get_prediction(file_path, model_name):
-    options = ClientOptions(api_endpoint='automl.googleapis.com')
-    prediction_client = automl_v1.PredictionServiceClient(client_options=options)
+    predictions = response.predictions
+    #for prediction in predictions:
+    #    print(" prediction:", dict(prediction))
+    print('returning predictions')
+    return predictions
 
-    payload = inline_text_payload(file_path)
-    # Uncomment the following line (and comment the above line) if want to predict on PDFs.
-    # payload = pdf_payload(file_path)
 
-    params = {}
-
-    request = prediction_client.predict(name=model_name, payload=payload)
-
-    return request  # waits until request is returned
-
-if __name__ == '__main__':
-    file_path = sys.argv[1]
-    model_name = sys.argv[2]
-
-    print(get_prediction(file_path, model_name))
+# [END aiplatform_predict_text_classification_single_label_sample]
