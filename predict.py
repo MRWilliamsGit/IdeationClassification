@@ -38,6 +38,3 @@ def class_this(
     #for prediction in predictions:
     #    print(" prediction:", dict(prediction))
     return predictions
-
-
-# [END aiplatform_predict_text_classification_single_label_sample]

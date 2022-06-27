@@ -21,7 +21,6 @@ def getpredict():
 def main():
     st.title("Classifying Reddit Posts")
     text = st.text_area('Enter Text:')
-    st.button("Classify")
 
     if st.button("Classify"):
         #get prediction
@@ -32,8 +31,16 @@ def main():
             content=text
         )
 
-    st.success("This text does not pertain to suicide.")
-    st.error("This text discusses suicide or displays possible suicidal ideation.")
+        for prediction in predictions:
+            p = dict(prediction)
+            #st.write(" prediction:", p)
+        #st.write(p["confidences"])
+
+        #classify answer
+        if p['confidences'][0]>p['confidences'][1]:
+            st.success("This text does not pertain to suicide.")
+        else:
+            st.error("This text discusses suicide or displays possible suicidal ideation.")
 
 if __name__ == "__main__":
        main() 
