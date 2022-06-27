@@ -2,6 +2,7 @@ black
 gcloud
 google
 google.cloud
+google.aiplatform
 google-api-core
 google-api-python-client
 google-cloud

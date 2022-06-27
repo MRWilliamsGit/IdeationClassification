@@ -37,7 +37,6 @@ def class_this(
     predictions = response.predictions
     #for prediction in predictions:
     #    print(" prediction:", dict(prediction))
-    print('returning predictions')
     return predictions
 
 
