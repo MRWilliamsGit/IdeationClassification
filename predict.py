@@ -15,7 +15,8 @@ def class_this(
     api_endpoint: str = "us-central1-aiplatform.googleapis.com",
 ):
     # The AI Platform services require regional API endpoints.
-    client_options = {"api_endpoint": api_endpoint}
+    
+    client_options = {"api_endpoint": api_endpoint, 'credentials_file': st.secrets.gc_serviceaccount}
     # Initialize client that will be used to create and send requests.
     # This client only needs to be created once, and can be reused for multiple requests.
     client = aiplatform.gapic.PredictionServiceClient(client_options=client_options)
