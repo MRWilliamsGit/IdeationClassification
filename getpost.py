@@ -1,10 +1,7 @@
-#Maria Williams
-#Get new post from Reddit
 #https://github.com/pushshift/api
 
-#import pandas as pd
 import requests
-import json #JSON manipulation
+import json
 import time
 import datetime
 from datetime import datetime, timedelta

@@ -1,6 +1,3 @@
-#Maria Williams
-#6/27/22
-
 import streamlit as st
 from google.cloud import aiplatform
 from predict import class_this
