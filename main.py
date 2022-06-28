@@ -24,7 +24,7 @@ def Classify(text):
 
 def main():
     st.title("Classifying Reddit Posts")
-    st.write("This form is designed to interact with an AI model which was trained to identify text as pertaining to suicide or demonstrating suicidal ideation.")
+    st.write("This form interacts with an AI model which was trained to identify text as pertaining to suicide or demonstrating suicidal ideation.")
     #st.write ("This model was trained on Reddit posts, but should be able to function with any text.")
     #st.write("Please enter text in the field below, or select one of the population options.")
 
