@@ -1,4 +1,5 @@
 import streamlit as st
+import os
 from google.cloud import aiplatform
 from predict import class_this
 from getpost import getPost
@@ -23,6 +24,8 @@ def Classify(text):
         st.error("This text discusses suicide or displays possible suicidal ideation.")
 
 def main():
+    #os.environ["GOOGLE_APPLICATION_CREDENTIALS"]=r"C:\Users\maria\OneDrive\Documents\School Summer 2022\IdeationClassification\ideationclassification-d09633ba31d7.json"
+    os.environ["GOOGLE_APPLICATION_CREDENTIALS"]=st.secrets.gc_serviceaccount
     st.title("Classifying Reddit Posts")
     st.write("This form interacts with an AI model which was trained to identify text as pertaining to suicide or demonstrating suicidal ideation.")
     #st.write ("This model was trained on Reddit posts, but should be able to function with any text.")

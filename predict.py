@@ -5,6 +5,7 @@ from google.cloud import aiplatform
 from google.cloud.aiplatform.gapic.schema import predict
 from google.protobuf import json_format
 from google.protobuf.struct_pb2 import Value
+import streamlit as st
 
 
 def class_this(
@@ -16,7 +17,7 @@ def class_this(
 ):
     # The AI Platform services require regional API endpoints.
     
-    client_options = {"api_endpoint": api_endpoint, 'credentials_file': st.secrets.gc_serviceaccount}
+    client_options = {"api_endpoint": api_endpoint}
     # Initialize client that will be used to create and send requests.
     # This client only needs to be created once, and can be reused for multiple requests.
     client = aiplatform.gapic.PredictionServiceClient(client_options=client_options)
