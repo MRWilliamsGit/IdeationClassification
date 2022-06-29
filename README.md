@@ -1,3 +1,5 @@
+[![IdeationClass Test](https://github.com/MRWilliamsGit/IdeationClassification/actions/workflows/main.yml/badge.svg)](https://github.com/MRWilliamsGit/IdeationClassification/actions/workflows/main.yml)
+
 # IdeationClassification
 This project demonstrates how a Google Vertex AI model could effectively learn to identify text as pertaining to suicide.
 
@@ -6,6 +8,12 @@ The model was trained on Reddit posts that were self-identified as pertaining to
 
 ### Modeling
 The model was trained by Vertex AI's AutoMl for NLP process to acheive 97% Precision.
+
+<p align="left">
+  <img src="https://github.com/MRWilliamsGit/IdeationClassification/blob/Screenshot.png" 
+       width= 443
+       height= 175 />
+</p>
 
 ### Deployment
 A simple app was created for public access to the model. It can recieve free text, or draw a recent Reddit post to analyze.
