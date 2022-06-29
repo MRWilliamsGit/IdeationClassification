@@ -2,8 +2,8 @@ import streamlit as st
 import os
 from google.cloud import aiplatform
 from oauth2client.client import GoogleCredentials
-from predict import class_this
-from getpost import getPost
+from scripts.predict import class_this
+from scripts.getpost import getPost
 import tempfile
 import json
 
