@@ -9,15 +9,15 @@ The model was trained on Reddit posts that were self-identified as pertaining to
 ### Modeling
 The model was trained by Vertex AI's AutoMl for NLP process to acheive 97% Precision.
 
-<p align="left">
-  <img src="https://github.com/MRWilliamsGit/IdeationClassification/blob/Screenshot.png" 
-       width= 443
-       height= 175 />
-</p>
-
 ### Deployment
 A simple app was created for public access to the model. It can recieve free text, or draw a recent Reddit post to analyze.
+
 To access: https://mrwilliamsgit-ideationclassification-main-71oty9.streamlitapp.com/
+
+<p align="left">
+  <img src="https://github.com/MRWilliamsGit/IdeationClassification/blob/114f785c287af73a20a087ed0ad0f4c35359508b/images/Screenshot.png"
+       width= 700 />
+</p>
 
 ### CICD Pipleline
 This project follows CICD best practices: Any changes pushed to Github are verified by GitHub actions before being written. Once written, the app automatically updates with the latest version from GitHub.
