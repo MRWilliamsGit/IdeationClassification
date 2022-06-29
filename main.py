@@ -27,42 +27,39 @@ def Classify(text):
         st.error("This text discusses suicide or displays possible suicidal ideation.")
 
 def main():
-    #works locally
-    os.environ["GOOGLE_APPLICATION_CREDENTIALS"]=r"C:\Users\maria\OneDrive\Documents\School Summer 2022\IdeationClassification\ideationclassification-d09633ba31d7.json"
 
-    #need to get working remotely
-    # cred = st.secrets["gc_serviceaccount"]
-    # cred = json.dumps(cred)
-    #os.environ["GOOGLE_APPLICATION_CREDENTIALS"]=cred
-
-    # with tempfile.NamedTemporaryFile(mode='w') as fp:
-    #     json.dump(cred, fp, indent=2, separators=(", ", ": "))
-    #     os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = fp.name    
-
-    st.title("Classifying Reddit Posts")
-    st.write("This form interacts with an AI model which was trained to identify text as pertaining to suicide or demonstrating suicidal ideation.")
-    #st.write ("This model was trained on Reddit posts, but should be able to function with any text.")
-    #st.write("Please enter text in the field below, or select one of the population options.")
-
-    box = st.radio('', ('Enter Text', 'Populate Dream Reddit Post', 'Populate Suicide Reddit Post'))
-    st.write('<style>div.row-widget.stRadio > div{flex-direction:row;}</style>', unsafe_allow_html=True)
+    with tempfile.NamedTemporaryFile(mode='r+', delete = False) as fp:
+        json.dump(st.secrets["gc_serviceaccount"], fp, indent=2, separators=(", ", ": "))
     
-    if box == "Populate Dream Reddit Post":
-        fill_text = getPost('Dreams')
-        st.text_area('', fill_text)
-        text = fill_text
-    elif box == "Populate Suicide Reddit Post":
-        fill_text = getPost('SuicideWatch')
-        st.text_area('', fill_text)
-        text = fill_text
-    else:
-        text = st.text_area('')
+    try:
+        os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = fp.name
 
-    if st.button("Classify"):
-        if text != '':
-            Classify(text)
+        st.title("Classifying Reddit Posts")
+        st.write("This form interacts with an AI model which was trained to identify text as pertaining to suicide or demonstrating suicidal ideation.")
+        #st.write ("This model was trained on Reddit posts, but should be able to function with any text.")
+        #st.write("Please enter text in the field below, or select one of the population options.")
+
+        box = st.radio('', ('Enter Text', 'Populate Dream Reddit Post', 'Populate Suicide Reddit Post'))
+        st.write('<style>div.row-widget.stRadio > div{flex-direction:row;}</style>', unsafe_allow_html=True)
+        
+        if box == "Populate Dream Reddit Post":
+            fill_text = getPost('Dreams')
+            st.text_area('', fill_text)
+            text = fill_text
+        elif box == "Populate Suicide Reddit Post":
+            fill_text = getPost('SuicideWatch')
+            st.text_area('', fill_text)
+            text = fill_text
         else:
-            st.error("Please provide text to classify.")
+            text = st.text_area('')
+
+        if st.button("Classify"):
+            if text != '':
+                Classify(text)
+            else:
+                st.error("Please provide text to classify.")
+    finally:
+        os.unlink(fp.name)
 
 if __name__ == "__main__":
        main() 
