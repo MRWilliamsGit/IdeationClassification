@@ -74,6 +74,7 @@ def main():
             else:
                 st.error("Please provide text to classify.")
     finally:
+        fp.close()
         os.unlink(fp.name)
 
 
